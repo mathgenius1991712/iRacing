@@ -1,0 +1,51 @@
+{% extends 'mainapp/layouts/landing_layout.html' %}
+ {% load static %} 
+ {% block page_level_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+{% endblock %} 
+{% block content %}
+
+<!-- ======= Simple Filler Section ======= -->
+<section class="simple-filler" style="padding: 0"></section>
+
+<section id="login" class="login">
+  <div class="container" data-aos="fade-up">
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <!-- Icon -->
+        <div class="fadeIn first my-4">
+          <h3>Sign In</h3>
+          {% if login_result == False %}
+          <p style="color: lightcoral">{{message}}</p>
+          {% endif%}
+        </div>
+
+        <!-- Login Form -->
+        <form method="POST" , action="{% url 'login' %}" class="login-form">
+          {% csrf_token %}
+          <input
+            type="email"
+            id="email"
+            class="fadeIn second"
+            name="email"
+            placeholder="email"
+          />
+          <input
+            type="password"
+            id="password"
+            class="fadeIn third"
+            name="password"
+            placeholder="password"
+          />
+          <input type="submit" class="fadeIn fourth" value="Sign In" />
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Login Section -->
+
+{% endblock %}

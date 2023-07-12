@@ -1,0 +1,121 @@
+{% extends 'mainapp/layouts/landing_layout.html' %}
+
+{% load my_filters %}
+
+{% block page_level_css %} 
+<style>
+  #loading_gif_block {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #loading_gif_block img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<!-- ======= Simple Filter Section ======= -->
+<section class="simple-filler" style="padding:0;">
+</section>
+<div id = "loading_gif_block" class="text-center" style="display:none;">
+  <section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+
+        <div class="loading-text">
+            <h2>Hang tight! Our furry little friends are working hard in the recording studio to get your script ready! Have a berry good time while you wait!
+              This process might take up to 60 seconds</h2>
+        </div>
+
+        <iframe src="https://giphy.com/embed/btbUGSHh3f6eBjbDfh" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/Operand-btbUGSHh3f6eBjbDfh"></a></p>
+
+  
+    </div>      
+
+  </div>
+    
+</div>
+<section id="answer_questions" class="answer_questions">
+  <div class="container" data-aos="fade-up">
+
+    <div class="row my-2 mx-2">
+      <div class="col-md-2 text-left">
+        <button class="btn btn-secondary" id="back_to_home" onclick="backToHome()">Back</button>
+      </div>
+      <div class="col-md-8">
+        <h2 class="mx-auto text-center">Generate A Personalized Video  {{type.title}}</h2>
+      </div>
+      <div class="col-md-2 text-right">
+        <a href="{% url 'review_script' %}" class="btn btn-secondary">Next</a>
+      </div>
+    </div>
+    <div class="row my-2 text-center">
+      <p class="text-center">
+        <span class="mx-auto" style="font-size: 18px; font-weight: bolder;">Answer the following questions to help AI create video (Step 1)</span>
+      </p>
+    </div>
+    <form id="answer_questions_form" method="POST" >
+      {% csrf_token %}
+      {% for index, question in questions %}
+      <div class="mb-2">
+        <label for="exampleInputEmail1{{question.id}}" class="form-label">{{question.question}}</label>
+        <textarea name="answer{{question.id}}" class="form-control" id="exampleInputEmail1{{question.id}}" placeholder="{{question.sample_answer}}...">{% if answers|length >  index %}{{ answers|index:index }}{% endif %}</textarea>
+      </div>
+      {% endfor %}
+      <div class="text-center">
+        <button type="submit" id="answer_questions_form_submit_button" class="btn btn-primary mb-3 mx-auto" style="width:30%">Generate Message</button>
+      </div>
+    </form>
+
+  </div>
+</section><!-- End Pricing Section -->
+<script>
+  function backToHome(){
+    var form = document.querySelector('#answer_questions_form');
+    var formData = new FormData(form);
+    console.log("aaaa");
+    fetch("{% url 'back_to_home' %}", {
+      method: "POST",
+      body: formData
+    }).then(() => {
+      window.location.href = "{% url 'home' %}";
+    }).catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+</script>
+<script>
+  $(document).ready(function(){
+    $("#answer_questions_form_submit_button").click(function(e){
+      e.preventDefault()
+      var form = document.querySelector('#answer_questions_form');
+      var formData = new FormData(form);
+      $("#loading_gif_block").css("display", "block");
+      // send POST request to server with FormData as body
+      fetch('{% url "answer_questions" %}', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        console.log("aaaaa");
+        $("#loading_gif_block").css("display", "none");
+        window.location.href = "{% url 'review_script' %}";
+        console.log('Success:', response);
+      })
+      .catch(error => {
+        $("#loading_gif_block").css("display", "none");
+        console.error('Error:', error);
+      });
+      console.log("aaaaa bbbbbbb");
+    })
+  })
+</script>
+{% endblock %}

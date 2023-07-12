@@ -1,0 +1,83 @@
+{% extends 'mainapp/layouts/landing_layout.html' %}
+{% load static %}☻
+
+{% block page_level_css %} 
+<link rel="stylesheet" type="text/css" href="{% static 'css/about.css' %}">
+{% endblock %}
+{% block content %}
+
+
+<!-- ======= Simple Filter Section ======= -->
+<section class="simple-filler" style="padding:0;">
+</section>
+<!-- ======= Pricing Section ======= -->
+<section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+        <h2>Pricing</h2>
+        <p>
+            We are not sure yet about pricing.
+            If you generate AI message, it cost us.
+            <br>
+            If you generate your voiceover or register your voice, it also cost us.
+            Please donate us
+        </p>
+        </div>
+
+        <div class="row">
+
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="box featured">
+            <h3>Free Plan</h3>
+            <h4><sup>$</sup>0<span>per month</span></h4>
+            <ul>
+                <li><i class="bx bx-check"></i> Generate AI Message </li>
+                <li><i class="bx bx-check"></i> Generate AI Voiceover</li>
+                <li><i class="bx bx-check"></i> Register Your Voice</li>
+                <li><i class="bx bx-check"></i> Generate Video</li>
+                <li class="na"><i class="bx bx-x"></i> <span>Download Voiceover</span></li>
+                <li class="na"><i class="bx bx-x"></i> <span>Download Video</span></li>
+            </ul>
+            <a href="#" class="buy-btn">Get Started</a>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
+            <div class="box featured">
+            <h3>Basic Plan</h3>
+            <h4><sup>$</sup>29<span>per month</span></h4>
+            <ul>
+                <li><i class="bx bx-check"></i> Generate AI Message </li>
+                <li><i class="bx bx-check"></i> Generate AI Voiceover</li>
+                <li><i class="bx bx-check"></i> Register Your Voice</li>
+                <li><i class="bx bx-check"></i> Generate Video</li>
+                <li ><i class="bx bx-check"></i> <span>Download Voiceover</span></li>
+                <li ><i class="bx bx-check"></i> <span>Download Video</span></li>
+            </ul>
+            <a href="#" class="buy-btn">Get Started</a>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <div class="box featured">
+            <h3>Advanced Plan</h3>
+            <h4><sup>$</sup>49<span>per month</span></h4>
+            <ul>
+                <li><i class="bx bx-check"></i> Generate AI Message </li>
+                <li><i class="bx bx-check"></i> Generate AI Voiceover</li>
+                <li><i class="bx bx-check"></i> Register Your Voice</li>
+                <li><i class="bx bx-check"></i> Generate Video</li>
+                <li ><i class="bx bx-check"></i> <span>Download Voiceover</span></li>
+                <li ><i class="bx bx-check"></i> <span>Download Video</span></li>
+            </ul>
+            <a href="#" class="buy-btn">Get Started</a>
+            </div>
+        </div>
+
+        </div>
+
+    </div>
+</section><!-- End Pricing Section -->
+
+{% endblock %}

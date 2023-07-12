@@ -1,0 +1,64 @@
+{% extends 'mainapp/layouts/landing_layout.html' %}
+{% load static %}
+{% block page_level_css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/review_script.css' %}">
+<style>
+ 
+</style>
+{% endblock %}
+
+
+{% block content %}
+<!-- ======= Simple Filler Section ======= -->
+<section class="simple-filler" style="padding:0;">
+</section>
+<section id="review_script" class="review_script" >
+  <div class="container" data-aos="fade-up">
+    <div class="row">
+      <div class="md-class-3">
+        <h2>Settings</h2>
+      </div>
+    </div>
+    <form class="row g-3" action="{% url 'change_meta' %}" method="post">
+      <div class="col-md-6">
+        <label for="inputEmail4" class="form-label">iRacing username</label>
+        <input type="email" class="form-control" id="inputEmail4">
+      </div>
+      <div class="col-md-6">
+        <label for="inputPassword4" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword4">
+      </div>
+      <div class="col-3">
+        <label for="inputAddress" class="form-label">Heading Color</label>
+        <input type="color" class="form-control" id="inputAddress" placeholder="1234 Main St">
+      </div>
+      <div class="col-3">
+        <label for="inputAddress" class="form-label">Data Color</label>
+        <input type="color" class="form-control" id="inputAddress" placeholder="1234 Main St">
+      </div>
+      <div class="col-3">
+        <label for="inputAddress" class="form-label">Total Color</label>
+        <input type="color" class="form-control" id="inputAddress" placeholder="1234 Main St">
+      </div>
+      <div class="col-3">
+        <label for="inputAddress" class="form-label">Name Color</label>
+        <input type="color" class="form-control" id="inputAddress" placeholder="1234 Main St">
+      </div>
+      
+
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+      </div>
+    </form>
+
+  </div>
+</section><!-- End About Us Section -->
+<!-- Button trigger modal -->
+
+
+
+<script>
+  
+</script>
+{% endblock %}

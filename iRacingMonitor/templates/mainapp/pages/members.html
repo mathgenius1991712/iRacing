@@ -1,0 +1,54 @@
+{% extends 'mainapp/layouts/landing_layout.html' %}
+{% load static %}
+{% block page_level_css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/review_script.css' %}">
+<style>
+ 
+</style>
+{% endblock %}
+
+
+{% block content %}
+<!-- ======= Simple Filler Section ======= -->
+<section class="simple-filler" style="padding:0;">
+</section>
+<section id="review_script" class="review_script" >
+  <div class="container" data-aos="fade-up">
+    <div class="row">
+      <div class="col-md-3">
+        <h2>Team Memebers</h2>
+      </div>
+    </div>
+    <div class="row">
+
+        <button class="btn btn-primary mr-2 mb-2 float-right">Add Member</button>
+
+    </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Customer ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">455246</th>
+          <td>Alexander van de Sandt</td>
+          <td><button class="btn btn-outline-primary">Edit</button></td>
+          <td><button class="btn btn-outline-primary">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section><!-- End About Us Section -->
+<!-- Button trigger modal -->
+
+
+
+<script>
+  
+</script>
+{% endblock %}

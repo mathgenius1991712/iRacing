@@ -1,0 +1,65 @@
+{% extends 'mainapp/layouts/landing_layout.html' %}
+{% load static %}
+{% block page_level_css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/review_script.css' %}">
+<style>
+ 
+</style>
+{% endblock %}
+
+
+{% block content %}
+<!-- ======= Simple Filler Section ======= -->
+<section class="simple-filler" style="padding:0;">
+</section>
+<section id="review_script" class="review_script" >
+  <div class="container" data-aos="fade-up">
+    <div class="row">
+      <div class="md-class-3">
+        <h2>Settings</h2>
+      </div>
+    </div>
+    <form class="row g-3" action="{% url 'change_meta' %}" method="post">
+      {% csrf_token %}
+      <div class="col-md-6">
+        <label for="iRacing_username" class="form-label">iRacing username</label>
+        <input type="email" class="form-control" id="iRacing_username" name="iRacing_username">
+      </div>
+      <div class="col-md-6">
+        <label for="iRacing_password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="iRacing_password" name="iRacing_password">
+      </div> 
+      <div class="col-3">
+        <label for="inputAddress" class="form-label">Heading Color</label>
+        <input type="color" class="form-control" id="inputAddress" placeholder="1234 Main St" name="heading_color" value="{{heading_color}}">
+      </div>
+      <div class="col-3">
+        <label for="inputAddress" class="form-label">Data Color</label>
+        <input type="color" class="form-control" id="inputAddress" placeholder="1234 Main St" name="data_color" value="{{data_color}}">
+      </div>
+      <div class="col-3">
+        <label for="inputAddress" class="form-label">Total Color</label>
+        <input type="color" class="form-control" id="inputAddress" placeholder="1234 Main St" name="total_color" value="{{total_color}}">
+      </div>
+      <div class="col-3">
+        <label for="inputAddress" class="form-label">Name Color</label>
+        <input type="color" class="form-control" id="inputAddress" placeholder="1234 Main St" name="name_color" value="{{name_color}}">
+      </div>
+      
+
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+      </div>
+    </form>
+
+  </div>
+</section><!-- End About Us Section -->
+<!-- Button trigger modal -->
+
+
+
+<script>
+  
+</script>
+{% endblock %}

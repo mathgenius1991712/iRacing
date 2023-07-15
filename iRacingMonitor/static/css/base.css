@@ -1,0 +1,10 @@
+html, body {
+    min-height: 100% !important;
+    height: 100% !important;
+}
+
+footer {
+    bottom: 0px;
+    width: 100%;
+    position: sticky;
+}

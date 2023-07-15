@@ -1,3 +1,7 @@
 /env/
 /iRacingMonitor/__pycache__/
+/iRacingMonitor/iRacingMonitor/__pycache__/
+/iRacingMonitor/mainapp/__pycache__/
+/iRacingMonitor/mainapp/migrations/__pycache__/
 /credentials.txt/
+/iRacingMonitor/env/

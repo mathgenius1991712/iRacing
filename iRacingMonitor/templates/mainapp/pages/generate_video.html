@@ -1,0 +1,147 @@
+{% extends 'mainapp/layouts/landing_layout.html' %}
+{% load static %}☻
+{% load my_filters %}
+{% block page_level_css %} 
+<link rel="stylesheet" type="text/css" href="{% static 'css/generate_video.css' %}">
+<style>
+  #loading_gif_block {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #loading_gif_block img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+</style>
+{% endblock %}
+{% block content %}
+
+
+<!-- ======= Simple Filter Section ======= -->
+<section class="simple-filler" style="padding:0;">
+</section>
+<div id = "loading_gif_block" class="text-center" style="display:none;">
+  <section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+
+        <div class="loading-text">
+            <h2>We know you're eager to watch the magic happen, but hang in there - our furry little friends are editing and rendering your video faster than bunny rabbits on caffeine!
+
+              The video creation process can take up to 5 minutes, but we promise it will be worth it, your is going to be SOOOOOO happy when  sees the video!
+              
+              If you're busy don't worry, we will email you here: {{request.user}} to let you know when the video is ready.
+              
+              Thanks for your patience!</h2>
+        </div>
+
+        <iframe src="https://giphy.com/embed/btbUGSHh3f6eBjbDfh" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/Operand-btbUGSHh3f6eBjbDfh"></a></p>
+
+  
+    </div>      
+
+  </div>
+    
+</div>
+<!-- ======= Pricing Section ======= -->
+<section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title py-1" >
+        <h2>Generate A Personalized Video  {{type.title}}</h2>
+      </div>
+      <div class="row py-1">
+        <div class="col-md-12" data-aos="fade-up" data-aos-delay="200">
+            <div class="box featured">
+              <img src="{% static type.thumbnail_path %}" class="img-fluid" alt="">
+            </div>
+        </div>
+
+      </div>
+      <div class="row py-2">
+        <div class="col-md-4">
+          <button id="listen_voice_button" class="w-100 btn btn-primary" >Listen To Voiceover</button>
+        </div>
+        <div class="col-md-4">
+          <a id="download_voiceover_anchor" class="w-100 btn btn-primary" download href="{{voiceover_url}}">Download MP3 File</a>
+        </div>
+        <div class="col-md-4">
+          <button class="w-100 btn btn-primary" id="generate_video_button">Generate Your Video</button>
+        </div>
+      </div>
+
+    </div>
+</section><!-- End Pricing Section -->
+
+<div class="modal fade " id="listenVoiceModal" tabindex="-1" role="dialog" aria-labelledby="listenVoiceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body"> 
+        <div class="container ">
+          <div class="row my-2">
+            <audio id="voiceover_audio" controls src="{{voiceover_url}}">
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    var download_anchor = $("#download_voiceover_anchor");
+    download_anchor.prop('href', "{{voiceover_url|safe|escapejs}}"+"?t=" + Date.now());
+    // Load the new audio file
+    var audio = $("#voiceover_audio");
+    audio.prop('src', "{{voiceover_url|safe|escapejs}}"+"?t=" + Date.now());
+    // Load the new audio file
+    audio[0].load();
+    $("#listenVoiceModal").on(" hidden.bs.modal", function(){
+      var audio = document.getElementById("voiceover_audio");
+      audio.pause();
+    });
+    $("#listenVoiceModal").on("shown.bs.modal", function(){
+      console.log("aaaa");
+      var audio = document.getElementById("voiceover_audio");
+      audio.play();
+    });
+    $("#listen_voice_button").click(function(){
+      console.log("xxxxx");
+      $("#listenVoiceModal").modal("show");
+    })
+    $("#generate_video_button").click(function(){
+      
+        //todo: This should be based on media table
+        //in media table the path should be stored an only id of media should be in request, not path
+        //console.log("xxxxxxxxxxx" + background_music_path)
+        $("#loading_gif_block").css("display", "block");
+        $.post(
+          "{% url 'generate_video_ajax' %}", 
+          {
+            csrfmiddlewaretoken:csrftoken,
+          },
+          function(data, status){
+            console.log("status");
+            if(status == "success"){
+              alert("success");
+              $("#loading_gif_block").css("display", "none");
+              window.location.href ="{% url 'final_result' %}"
+              
+            }else{
+              alert("failed");
+              $("#loading_gif_block").css("display", "none");
+            }
+          }
+        )
+        
+      })
+  })
+</script>
+{% endblock %}

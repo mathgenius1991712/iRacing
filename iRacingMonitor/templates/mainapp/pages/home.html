@@ -1,0 +1,89 @@
+{% extends 'mainapp/layouts/landing_layout.html' %}
+
+{% block content %}
+{% load static %}
+{% block page_level_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+{% endblock%}
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex align-items-center">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+        <h1>Welcome to AI Love Video Creator</h1>
+        <h2>Create Heartfelt Loving Videos <br> With A Little Help From AI</h2>
+        <!-- <p style="color:aliceblue">Share your love in a new way with a personalized video that's as unique as your feelings. Just tell us a few words about the person you're making a video for and we'll do the rest.
+        </p> -->
+        <div class="d-flex justify-content-center justify-content-lg-start">
+          <a href="#main" class="btn-get-started scrollto">Get Started</a>
+          <a href="{{ MEDIA_URL }}/{{ 'video/intro_video.mp4' }}" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+        </div>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+        <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="">
+      </div>
+    </div>
+  </div>
+
+</section><!-- End Hero -->
+
+<main id="main">
+
+  <!-- ======= Services Section ======= -->
+  <section id="services" class="services section-bg">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>I Want To Create A Video...</h2>
+        <p>
+          Share your love in a new way with a personalized video that's as unique as your feelings. Just tell us a few words about the person you're making a video for and we'll do the rest.
+        </p>
+      </div>
+      <div class="row">
+        {% for type in types%}  
+        <div class="col-xl-3 col-md-6 d-flex align-items-stretch mb-4" data-aos="zoom-in" data-aos-delay="100" style="position:relative">
+          <a href="{% url 'answer_questions' type=type.id %}">
+            <div class="icon-box w-100 video-option-card" style="opacity:0.6">
+              <img src="{% static type.thumbnail_path %}" class="img-fluid" alt="">
+            </div>
+          </a>
+          
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section><!-- End Services Section -->
+
+
+
+</main><!-- End #main -->
+
+<div class="modal fade " id="notifyModal" tabindex="-1" role="dialog" aria-labelledby="voiceRecordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title ">Thanks for visiting us</h5>
+
+        <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"> 
+        <div class="container">
+          1. Our Website is still in progress. Please create a love video for mum only. The others are not prepared yet.
+<br>2. Also, your voice and video will only be stored for a day. Thus please download once the video is ready
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$(document).ready(function(){
+
+  $("#notifyModal").modal("show")
+
+})
+</script>
+{% endblock %}

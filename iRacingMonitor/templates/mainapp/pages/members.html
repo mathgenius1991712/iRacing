@@ -20,9 +20,7 @@
       </div>
     </div>
     <div class="row">
-
-        <button class="btn btn-primary mr-2 mb-2 float-right">Add Member</button>
-
+      <button class="btn btn-primary mr-2 mb-2 float-right" data-bs-toggle="modal" data-bs-target="#newMemberModal">Add Member</button>
     </div>
     <table class="table table-hover">
       <thead>
@@ -34,21 +32,84 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">455246</th>
-          <td>Alexander van de Sandt</td>
-          <td><button class="btn btn-outline-primary">Edit</button></td>
-          <td><button class="btn btn-outline-primary">Delete</button></td>
-        </tr>
+        {% for member in members %}
+          <tr>
+            <th scope="row">{{member.customer_id}}</th>
+            <td>{{member.name}}</td>
+            <td><button class="btn btn-outline-primary" data-attr="{{member.id}}" onclick="showEditModal('{{member.id}}', '{{member.customer_id}}', '{{member.name}}')" >Edit</button></td>
+            <td><a class="btn btn-outline-primary" data-attr="{{member.id}}" href="{% url 'delete_member' member.id %}">Delete</a></td>
+          </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
 </section><!-- End About Us Section -->
 <!-- Button trigger modal -->
+<div class="modal fade" id="newMemberModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Member</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Vertical Form -->
+        <form class="row g-3" id="upload_form" action="{% url 'add_member' %}" method="POST">
+          {% csrf_token %}  
+          <div class="form-group">
+            <label for="customer_id" class="form-label">Customer ID</label>
+            <input type="text" class="form-control" id="customer_id" name="customer_id" required>
+          </div>
+          <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary" >Add</button>
+            <button type="reset" class="btn btn-secondary" id="upload_form_reset_button">Reset</button>
+          </div>
+        </form><!-- Vertical Form -->
+      </div>
+    </div>
+  </div>
+</div>
 
-
+<div class="modal fade" id="editMemberModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Member</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Vertical Form -->
+        <form class="row g-3" id="upload_form" action="{% url 'edit_member' %}" method="POST">
+          {% csrf_token %}  
+          <input type="text" hidden id="edit_id" name="id" required>
+          <div class="form-group">
+            <label for="edit_customer_id" class="form-label">Customer ID</label>
+            <input type="text" class="form-control" id="edit_customer_id" name="customer_id" required>
+          </div>
+          <div class="form-group">
+            <label for="edit_name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="edit_name" name="name" required>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary" >Edit</button>
+            <button type="reset" class="btn btn-secondary" id="upload_form_reset_button">Reset</button>
+          </div>
+        </form><!-- Vertical Form -->
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-  
+  function showEditModal(id, customer_id, name){
+    $("#edit_id").val(id)
+    $("#edit_customer_id").val(customer_id)
+    $("#edit_name").val(name)
+    $("#editMemberModal").modal("show");
+  }
 </script>
 {% endblock %}

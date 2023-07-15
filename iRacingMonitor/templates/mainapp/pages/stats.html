@@ -19,17 +19,17 @@
         <h2>Stats</h2>
       </div>
     </div>
-    <form class="form-inline">
+    <form class="form-inline" action="{% url 'stats' %}" method="POST">
       {% csrf_token %}
-      <label class="mr-2" for="inlineFormInputName2">Start Date</label>
-      <input type="date" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Jane Doe">
+      <label class="mr-2" for="start_date">Start Date</label>
+      <input type="date" class="form-control mb-2 mr-sm-2" id="start_date"  name="start_date" value="{{start_date}}">
     
-      <label class="mr-2" for="inlineFormInputGroupUsername2">Generate Image</label>
-      <input type="date" class="form-control mr-2" id="inlineFormInputGroupUsername2" placeholder="Username">
+      <label class="mr-2" for="end_date">End Date</label>
+      <input type="date" class="form-control mr-2" id="end_date" placeholder="Username" name="end_date" value="{{end_date}}" >
       
     
-      <button type="button" class="btn btn-primary mb-2 mr-2">Get Data</button>
-      <button type="button" class="btn btn-primary mb-2 mr-2">Get Data</button>
+      <button type="submit" class="btn btn-primary mb-2 mr-2">Get Data</button>
+      <button type="button" class="btn btn-primary mb-2 mr-2">Generate Image</button>
     </form>
     <table class="table table-hover">
       <thead>
@@ -68,8 +68,4 @@
 <!-- Button trigger modal -->
 
 
-
-<script>
-  
-</script>
 {% endblock %}

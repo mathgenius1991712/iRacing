@@ -39,6 +39,8 @@ class Member(models.Model):
   name = models.CharField(max_length=255)
 
 class MetaInfo(models.Model):
+  iRacing_username = models.EmailField()
+  iRacing_password = models.CharField(max_length=255)
   heading_color = models.CharField(max_length=255)
   data_color = models.CharField(max_length=255)
   total_color = models.CharField(max_length=255)

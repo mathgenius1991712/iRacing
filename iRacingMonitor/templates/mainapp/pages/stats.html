@@ -3,7 +3,17 @@
 {% block page_level_css%}
 <link rel="stylesheet" type="text/css" href="{% static 'css/review_script.css' %}">
 <style>
- 
+  tbody > tr:last-child 
+  { 
+    color:#FF0000; 
+  }
+  tbody > tr:first-child 
+  { 
+    color:#ffff00; 
+  }
+  th.name-col {
+    color:#000000; 
+  }
 </style>
 {% endblock %}
 
@@ -19,22 +29,11 @@
         <h2>Stats</h2>
       </div>
     </div>
-    <form class="form-inline" action="{% url 'stats' %}" method="POST">
-      {% csrf_token %}
-      <label class="mr-2" for="start_date">Start Date</label>
-      <input type="date" class="form-control mb-2 mr-sm-2" id="start_date"  name="start_date" value="{{start_date}}">
     
-      <label class="mr-2" for="end_date">End Date</label>
-      <input type="date" class="form-control mr-2" id="end_date" placeholder="Username" name="end_date" value="{{end_date}}" >
-      
-    
-      <button type="submit" class="btn btn-primary mb-2 mr-2">Get Data</button>
-      <button type="button" class="btn btn-primary mb-2 mr-2">Generate Image</button>
-    </form>
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">Name</th>
+          <th scope="col" class="name-col">Name</th>
           <th scope="col">Starts</th>
           <th scope="col">Wins</th>
           <th scope="col">Top 5</th>
@@ -51,16 +50,16 @@
         {% for each_row in data %}
         <tr>
           <th scope="row">{{each_row.name}}</th>
-          <td>4</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
+          <th scope="row">{{each_row.starts}}</th>
+          <th scope="row">{{each_row.wins}}</th>
+          <th scope="row">{{each_row.top_5}}</th>
+          <th scope="row">{{each_row.top_10}}</th>
+          <th scope="row">{{each_row.laps}}</th>
+          <th scope="row">{{each_row.laps_lead}}</th>
+          <th scope="row">{{each_row.cautions}}</th>
+          <th scope="row">{{each_row.caution_laps}}</th>
+          <th scope="row">{{each_row.i_rating_gain_loss}}</th>
+          <th scope="row">{{each_row.safety_gain_loss}}</th>
         </tr>
         {% endfor %}
       </tbody>

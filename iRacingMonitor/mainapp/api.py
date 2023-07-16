@@ -5,8 +5,11 @@ from cryptography.fernet import Fernet
 from asgiref.sync import sync_to_async, async_to_sync
 from iracingdataapi.client import irDataClient
 import datetime
-
-from asyncer import syncify
+import os
+import json
+from django.conf import settings
+import pandas as pd
+import dataframe_image as dfi
 
 def getDataForOneMember(start_date, end_date, customer_id):
   member = Member.objects.filter(customer_id = customer_id).first()
@@ -54,7 +57,7 @@ def getDataForOneMember(start_date, end_date, customer_id):
           cautions += each_series["num_cautions"]
         if each_series["num_caution_laps"] != -1:
           caution_laps += each_series["num_caution_laps"]
-        i_rating_gain_loss += (each_series["newi_rating"]-each_series["oldi_rating"])
+        i_rating_gain_loss += (driver_rank["newi_rating"]-driver_rank["oldi_rating"])
     series_in_range.append(each_series)
     #if(each_series)
 
@@ -77,10 +80,60 @@ def getDataForOneMember(start_date, end_date, customer_id):
 
 def getData(start_date, end_date):
   data = []
+  total = {}
+  total["name"] = "Total"
+  total["starts"] = 0
+  total["wins"] = 0
+  total["laps"] = 0
+  total["top_5"] = 0
+  total["top_10"] = 0
+  total["laps_lead"] = 0
+  total["cautions"] = 0
+  total["caution_laps"] = 0
+  total["i_rating_gain_loss"] = 0
+  total["safety_gain_loss"] = 0
   members = Member.objects.all()
   for member in members:
-    data.append(getDataForOneMember(start_date=start_date, end_date=end_date, customer_id=member.customer_id))
+    member_data = getDataForOneMember(start_date=start_date, end_date=end_date, customer_id=member.customer_id)
+    data.append(member_data)
+    total["starts"] += total["starts"]
+    total["wins"] += total["starts"]
+    total["laps"] += total["laps"]
+    total["top_5"] += total["top_5"]
+    total["top_10"] += total["top_10"]
+    total["laps_lead"] += total["laps_lead"]
+    total["cautions"] += total["cautions"]
+    total["caution_laps"] += total["caution_laps"]
+    total["i_rating_gain_loss"] += total["i_rating_gain_loss"]
+    total["safety_gain_loss"] += total["safety_gain_loss"]
+  data.append(total)
   return data
   
+def saveData(data, start_date, end_date):
+  if not os.path.exists('output.json'):
+    os.remove("output.json")
+  output_data = {
+    "start_date": start_date.strftime('%Y-%m-%d'),
+    "end_date": end_date.strftime('%Y-%m-%d'),
+    "data": data
+  }
+  json_for_output = json.dumps(output_data, indent=2)
+  with open("output.json", "w") as outfile:
+    outfile.write(json_for_output)
+
+def readData():
+  f = open('output.json')
+  data = json.load(f)
+  return data
+
+def generateImage():
+  df = pd.DataFrame({})
+  if not os.path.exists('output.json'):
+    return False
+  data = readData()
+  for each_row in data["data"]:
+    df = df.append(each_row)
   
-  
+  filepath = os.path.join(settings.MEDIA_ROOT, "output.jpg")
+  dfi.export(df, filepath)
+  return True

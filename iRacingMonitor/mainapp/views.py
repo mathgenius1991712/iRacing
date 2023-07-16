@@ -5,9 +5,10 @@ from django.contrib.auth.decorators import login_required
 from .models import MetaInfo, CustomUser, Member
 from django.http import HttpResponse
 import datetime
-from .api import getData
+from .api import getData, saveData, readData, generateImage
 from cryptography.fernet import Fernet
 from .key import key
+import os
 # Create your views here.
 
 #login
@@ -71,6 +72,9 @@ def delete_member(request, id):
 @login_required
 def stats(request):
   if request.method == 'GET':
+    if os.path.exists('output.json'):
+      viewParams= readData()
+      return render(request, 'mainapp/pages/stats.html', viewParams)
     end_date = datetime.datetime.now()
     start_date = end_date - datetime.timedelta(days=7)
     
@@ -81,6 +85,8 @@ def stats(request):
     end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
   
   data = getData(start_date=start_date, end_date=end_date)
+  saveData(data, start_date, end_date)
+  
   viewParams = {}
   viewParams["data"] = data
   viewParams["start_date"] = start_date.strftime('%Y-%m-%d')
@@ -92,7 +98,8 @@ def stats(request):
 #export_stats
 @login_required
 def export_stats(request):
-  print("export_stats")
+  generateImage()
+  return render(request, 'mainapp/pages/export_stats.html')
 
 #meta
 @login_required
@@ -152,3 +159,5 @@ def change_meta(request):
     cur_setting.save()
     
   return redirect(stats)
+
+

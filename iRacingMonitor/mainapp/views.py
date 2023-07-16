@@ -5,9 +5,10 @@ from django.contrib.auth.decorators import login_required
 from .models import MetaInfo, CustomUser, Member
 from django.http import HttpResponse
 import datetime
-from .api import getData
+from .api import get_data, save_data, read_data, generate_image
 from cryptography.fernet import Fernet
 from .key import key
+import os
 # Create your views here.
 
 #login
@@ -70,7 +71,16 @@ def delete_member(request, id):
 #stats
 @login_required
 def stats(request):
+  cur_setting = MetaInfo.objects.first()
+  
   if request.method == 'GET':
+    if os.path.exists('output.json'):
+      viewParams= read_data()
+      viewParams['heading_color'] = cur_setting.heading_color
+      viewParams['data_color'] = cur_setting.data_color
+      viewParams['total_color'] = cur_setting.total_color
+      viewParams['name_color'] = cur_setting.name_color
+      return render(request, 'mainapp/pages/stats.html', viewParams)
     end_date = datetime.datetime.now()
     start_date = end_date - datetime.timedelta(days=7)
     
@@ -80,11 +90,17 @@ def stats(request):
     start_date = datetime.datetime.strptime(start_date_str, "%Y-%m-%d")
     end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
   
-  data = getData(start_date=start_date, end_date=end_date)
+  data = get_data(start_date=start_date, end_date=end_date)
+  save_data(data, start_date, end_date)
+  
   viewParams = {}
   viewParams["data"] = data
   viewParams["start_date"] = start_date.strftime('%Y-%m-%d')
   viewParams["end_date"] = end_date.strftime('%Y-%m-%d')
+  viewParams['heading_color'] = cur_setting.heading_color
+  viewParams['data_color'] = cur_setting.data_color
+  viewParams['total_color'] = cur_setting.total_color
+  viewParams['name_color'] = cur_setting.name_color
   return render(request, 'mainapp/pages/stats.html', viewParams)
 
 
@@ -92,7 +108,8 @@ def stats(request):
 #export_stats
 @login_required
 def export_stats(request):
-  print("export_stats")
+  generate_image()
+  return render(request, 'mainapp/pages/export_stats.html')
 
 #meta
 @login_required
@@ -152,3 +169,5 @@ def change_meta(request):
     cur_setting.save()
     
   return redirect(stats)
+
+

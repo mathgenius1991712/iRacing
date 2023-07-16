@@ -1,0 +1,32 @@
+{% extends 'mainapp/layouts/landing_layout.html' %}
+{% load static %}
+{% block page_level_css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/review_script.css' %}">
+<style>
+ 
+</style>
+{% endblock %}
+
+
+{% block content %}
+<!-- ======= Simple Filler Section ======= -->
+<section class="simple-filler" style="padding:0;">
+</section>
+<section id="review_script" class="review_script" >
+  <div class="container" data-aos="fade-up">
+    <div class="row mb-5">
+      <h2>Generated Image</h2>
+    </div>
+    <div class="row mt-4 mb-2">
+      <image src="/media/output.jpg">
+    </div>
+    <div class="row mt-4 mb-2">
+      <a class="btn btn-primary" href="/media/output.jpg" download>Download</a>
+    </div>
+  </div>
+
+</section><!-- End About Us Section -->
+<!-- Button trigger modal -->
+
+
+{% endblock %}

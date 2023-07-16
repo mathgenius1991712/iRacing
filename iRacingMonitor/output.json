@@ -1,0 +1,58 @@
+{
+  "start_date": "2023-07-09",
+  "end_date": "2023-07-16",
+  "data": [
+    {
+      "name": "Alexsander van de sandt",
+      "starts": 0,
+      "wins": 0,
+      "laps": 0,
+      "top_5": 0,
+      "top_10": 0,
+      "laps_lead": 0,
+      "cautions": 0,
+      "caution_laps": 0,
+      "i_rating_gain_loss": 0,
+      "safety_gain_loss": 0
+    },
+    {
+      "name": "Andrew Russo",
+      "starts": 2,
+      "wins": 0,
+      "laps": 1,
+      "top_5": 0,
+      "top_10": 0,
+      "laps_lead": 0,
+      "cautions": 6,
+      "caution_laps": 24,
+      "i_rating_gain_loss": -31,
+      "safety_gain_loss": 0
+    },
+    {
+      "name": "Brandon Pierce",
+      "starts": 0,
+      "wins": 0,
+      "laps": 0,
+      "top_5": 0,
+      "top_10": 0,
+      "laps_lead": 0,
+      "cautions": 0,
+      "caution_laps": 0,
+      "i_rating_gain_loss": 0,
+      "safety_gain_loss": 0
+    },
+    {
+      "name": "Total",
+      "starts": 2,
+      "wins": 2,
+      "laps": 1,
+      "top_5": 0,
+      "top_10": 0,
+      "laps_lead": 0,
+      "cautions": 6,
+      "caution_laps": 24,
+      "i_rating_gain_loss": -31,
+      "safety_gain_loss": 0
+    }
+  ]
+}

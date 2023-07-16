@@ -196,7 +196,7 @@ function RecordRTC(mediaStream, config) {
                 return;
             }
 
-            getDataURL(function (dataURL) {
+            get_dataURL(function (dataURL) {
                 var parameter = {};
                 parameter[config.type + "Blob"] = dataURL;
                 DiskStorage.Store(parameter);
@@ -259,9 +259,9 @@ function RecordRTC(mediaStream, config) {
         postMessage(new FileReaderSync().readAsDataURL(_blob));
     }
 
-    function getDataURL(callback, _mediaRecorder) {
+    function get_dataURL(callback, _mediaRecorder) {
         if (!callback) {
-            throw "Pass a callback function over getDataURL.";
+            throw "Pass a callback function over get_dataURL.";
         }
 
         var blob = _mediaRecorder
@@ -274,7 +274,7 @@ function RecordRTC(mediaStream, config) {
             }
 
             setTimeout(function () {
-                getDataURL(callback, _mediaRecorder);
+                get_dataURL(callback, _mediaRecorder);
             }, 1000);
             return;
         }
@@ -531,12 +531,12 @@ function RecordRTC(mediaStream, config) {
          * @instance
          * @example
          * recorder.stopRecording(function() {
-         *     recorder.getDataURL(function(dataURI) {
+         *     recorder.get_dataURL(function(dataURI) {
          *         video.src = dataURI;
          *     });
          * });
          */
-        getDataURL: getDataURL,
+        get_dataURL: get_dataURL,
 
         /**
          * Get virtual/temporary URL. Usage of this URL is limited to current tab.
@@ -878,9 +878,9 @@ RecordRTC.writeToDisk = function (options) {
     console.log("Writing recorded blob(s) to disk!");
     options = options || {};
     if (options.audio && options.video && options.gif) {
-        options.audio.getDataURL(function (audioDataURL) {
-            options.video.getDataURL(function (videoDataURL) {
-                options.gif.getDataURL(function (gifDataURL) {
+        options.audio.get_dataURL(function (audioDataURL) {
+            options.video.get_dataURL(function (videoDataURL) {
+                options.gif.get_dataURL(function (gifDataURL) {
                     DiskStorage.Store({
                         audioBlob: audioDataURL,
                         videoBlob: videoDataURL,
@@ -890,8 +890,8 @@ RecordRTC.writeToDisk = function (options) {
             });
         });
     } else if (options.audio && options.video) {
-        options.audio.getDataURL(function (audioDataURL) {
-            options.video.getDataURL(function (videoDataURL) {
+        options.audio.get_dataURL(function (audioDataURL) {
+            options.video.get_dataURL(function (videoDataURL) {
                 DiskStorage.Store({
                     audioBlob: audioDataURL,
                     videoBlob: videoDataURL,
@@ -899,8 +899,8 @@ RecordRTC.writeToDisk = function (options) {
             });
         });
     } else if (options.audio && options.gif) {
-        options.audio.getDataURL(function (audioDataURL) {
-            options.gif.getDataURL(function (gifDataURL) {
+        options.audio.get_dataURL(function (audioDataURL) {
+            options.gif.get_dataURL(function (gifDataURL) {
                 DiskStorage.Store({
                     audioBlob: audioDataURL,
                     gifBlob: gifDataURL,
@@ -908,8 +908,8 @@ RecordRTC.writeToDisk = function (options) {
             });
         });
     } else if (options.video && options.gif) {
-        options.video.getDataURL(function (videoDataURL) {
-            options.gif.getDataURL(function (gifDataURL) {
+        options.video.get_dataURL(function (videoDataURL) {
+            options.gif.get_dataURL(function (gifDataURL) {
                 DiskStorage.Store({
                     videoBlob: videoDataURL,
                     gifBlob: gifDataURL,
@@ -917,19 +917,19 @@ RecordRTC.writeToDisk = function (options) {
             });
         });
     } else if (options.audio) {
-        options.audio.getDataURL(function (audioDataURL) {
+        options.audio.get_dataURL(function (audioDataURL) {
             DiskStorage.Store({
                 audioBlob: audioDataURL,
             });
         });
     } else if (options.video) {
-        options.video.getDataURL(function (videoDataURL) {
+        options.video.get_dataURL(function (videoDataURL) {
             DiskStorage.Store({
                 videoBlob: videoDataURL,
             });
         });
     } else if (options.gif) {
-        options.gif.getDataURL(function (gifDataURL) {
+        options.gif.get_dataURL(function (gifDataURL) {
             DiskStorage.Store({
                 gifBlob: gifDataURL,
             });
@@ -1514,17 +1514,17 @@ function MRecordRTC(mediaStream) {
      * @method
      * @memberof MRecordRTC
      * @example
-     * recorder.getDataURL(function(recording){
+     * recorder.get_dataURL(function(recording){
      *     var audioDataURL = recording.audio;
      *     var videoDataURL = recording.video;
      *     var gifDataURL   = recording.gif;
      * });
      */
-    this.getDataURL = function (callback) {
+    this.get_dataURL = function (callback) {
         this.getBlob(function (blob) {
             if (blob.audio && blob.video) {
-                getDataURL(blob.audio, function (_audioDataURL) {
-                    getDataURL(blob.video, function (_videoDataURL) {
+                get_dataURL(blob.audio, function (_audioDataURL) {
+                    get_dataURL(blob.video, function (_videoDataURL) {
                         callback({
                             audio: _audioDataURL,
                             video: _videoDataURL,
@@ -1532,13 +1532,13 @@ function MRecordRTC(mediaStream) {
                     });
                 });
             } else if (blob.audio) {
-                getDataURL(blob.audio, function (_audioDataURL) {
+                get_dataURL(blob.audio, function (_audioDataURL) {
                     callback({
                         audio: _audioDataURL,
                     });
                 });
             } else if (blob.video) {
-                getDataURL(blob.video, function (_videoDataURL) {
+                get_dataURL(blob.video, function (_videoDataURL) {
                     callback({
                         video: _videoDataURL,
                     });
@@ -1546,7 +1546,7 @@ function MRecordRTC(mediaStream) {
             }
         });
 
-        function getDataURL(blob, callback00) {
+        function get_dataURL(blob, callback00) {
             if (typeof Worker !== "undefined") {
                 var webWorker = processInWebWorker(function readFile(_blob) {
                     postMessage(new FileReaderSync().readAsDataURL(_blob));
@@ -6310,15 +6310,15 @@ function RecordRTCPromisesHandler(mediaStream, options) {
      * @memberof RecordRTCPromisesHandler
      * @example
      * recorder.stopRecording().then(function() {
-     *     recorder.getDataURL().then(function(dataURL) {
+     *     recorder.get_dataURL().then(function(dataURL) {
      *         window.open(dataURL);
      *     }).catch(errorCB);;
      * }).catch(errorCB);
      */
-    this.getDataURL = function (callback) {
+    this.get_dataURL = function (callback) {
         return new Promise(function (resolve, reject) {
             try {
-                self.recordRTC.getDataURL(function (dataURL) {
+                self.recordRTC.get_dataURL(function (dataURL) {
                     resolve(dataURL);
                 });
             } catch (e) {

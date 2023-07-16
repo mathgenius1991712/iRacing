@@ -807,7 +807,7 @@ S2.define('select2/utils',[
     Utils.__cache[id][name] = value;
   };
 
-  Utils.GetData = function (element, name) {
+  Utils.get_data = function (element, name) {
     // Retrieves a value from the cache by its key (name)
     // name is optional. If no name specified, return
     // all cache items for the specified element.
@@ -971,7 +971,7 @@ S2.define('select2/results',[
       $options.each(function () {
         var $option = $(this);
 
-        var item = Utils.GetData(this, 'data');
+        var item = Utils.get_data(this, 'data');
 
         // id needs to be converted to a string when comparing
         var id = '' + item.id;
@@ -1173,7 +1173,7 @@ S2.define('select2/results',[
         return;
       }
 
-      var data = Utils.GetData($highlighted[0], 'data');
+      var data = Utils.get_data($highlighted[0], 'data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
         self.trigger('close', {});
@@ -1286,7 +1286,7 @@ S2.define('select2/results',[
       function (evt) {
       var $this = $(this);
 
-      var data = Utils.GetData(this, 'data');
+      var data = Utils.get_data(this, 'data');
 
       if ($this.attr('aria-selected') === 'true') {
         if (self.options.get('multiple')) {
@@ -1309,7 +1309,7 @@ S2.define('select2/results',[
 
     this.$results.on('mouseenter', '.select2-results__option[aria-selected]',
       function (evt) {
-      var data = Utils.GetData(this, 'data');
+      var data = Utils.get_data(this, 'data');
 
       self.getHighlightedResults()
           .removeClass('select2-results__option--highlighted');
@@ -1424,8 +1424,8 @@ S2.define('select2/selection/base',[
 
     this._tabindex = 0;
 
-    if (Utils.GetData(this.$element[0], 'old-tabindex') != null) {
-      this._tabindex = Utils.GetData(this.$element[0], 'old-tabindex');
+    if (Utils.get_data(this.$element[0], 'old-tabindex') != null) {
+      this._tabindex = Utils.get_data(this.$element[0], 'old-tabindex');
     } else if (this.$element.attr('tabindex') != null) {
       this._tabindex = this.$element.attr('tabindex');
     }
@@ -1532,7 +1532,7 @@ S2.define('select2/selection/base',[
           return;
         }
 
-        var $element = Utils.GetData(this, 'element');
+        var $element = Utils.get_data(this, 'element');
 
         $element.select2('close');
       });
@@ -1734,7 +1734,7 @@ S2.define('select2/selection/multiple',[
         var $remove = $(this);
         var $selection = $remove.parent();
 
-        var data = Utils.GetData($selection[0], 'data');
+        var data = Utils.get_data($selection[0], 'data');
 
         self.trigger('unselect', {
           originalEvent: evt,
@@ -1901,7 +1901,7 @@ S2.define('select2/selection/allowClear',[
 
     evt.stopPropagation();
 
-    var data = Utils.GetData($clear[0], 'data');
+    var data = Utils.get_data($clear[0], 'data');
 
     var previousVal = this.$element.val();
     this.$element.val(this.placeholder.id);
@@ -2060,7 +2060,7 @@ S2.define('select2/selection/search',[
           .prev('.select2-selection__choice');
 
         if ($previousChoice.length > 0) {
-          var item = Utils.GetData($previousChoice[0], 'data');
+          var item = Utils.get_data($previousChoice[0], 'data');
 
           self.searchRemoveChoice(item);
 
@@ -3386,7 +3386,7 @@ S2.define('select2/data/select',[
   SelectAdapter.prototype.item = function ($option) {
     var data = {};
 
-    data = Utils.GetData($option[0], 'data');
+    data = Utils.get_data($option[0], 'data');
 
     if (data != null) {
       return data;
@@ -4446,7 +4446,7 @@ S2.define('select2/dropdown/attachBody',[
     });
 
     $watchers.on(scrollEvent, function (ev) {
-      var position = Utils.GetData(this, 'select2-scroll-position');
+      var position = Utils.get_data(this, 'select2-scroll-position');
       $(this).scrollTop(position.y);
     });
 
@@ -4653,7 +4653,7 @@ S2.define('select2/dropdown/selectOnClose',[
       return;
     }
 
-    var data = Utils.GetData($highlightedResults[0], 'data');
+    var data = Utils.get_data($highlightedResults[0], 'data');
 
     // Don't re-select already selected resulte
     if (
@@ -5266,7 +5266,7 @@ S2.define('select2/options',[
     $e.prop('disabled', this.options.disabled);
     $e.prop('multiple', this.options.multiple);
 
-    if (Utils.GetData($e[0], 'select2Tags')) {
+    if (Utils.get_data($e[0], 'select2Tags')) {
       if (this.options.debug && window.console && console.warn) {
         console.warn(
           'Select2: The `data-select2-tags` attribute has been changed to ' +
@@ -5275,11 +5275,11 @@ S2.define('select2/options',[
         );
       }
 
-      Utils.StoreData($e[0], 'data', Utils.GetData($e[0], 'select2Tags'));
+      Utils.StoreData($e[0], 'data', Utils.get_data($e[0], 'select2Tags'));
       Utils.StoreData($e[0], 'tags', true);
     }
 
-    if (Utils.GetData($e[0], 'ajaxUrl')) {
+    if (Utils.get_data($e[0], 'ajaxUrl')) {
       if (this.options.debug && window.console && console.warn) {
         console.warn(
           'Select2: The `data-ajax-url` attribute has been changed to ' +
@@ -5288,8 +5288,8 @@ S2.define('select2/options',[
         );
       }
 
-      $e.attr('ajax--url', Utils.GetData($e[0], 'ajaxUrl'));
-      Utils.StoreData($e[0], 'ajax-Url', Utils.GetData($e[0], 'ajaxUrl'));
+      $e.attr('ajax--url', Utils.get_data($e[0], 'ajaxUrl'));
+      Utils.StoreData($e[0], 'ajax-Url', Utils.get_data($e[0], 'ajaxUrl'));
     }
 
     var dataset = {};
@@ -5309,7 +5309,7 @@ S2.define('select2/options',[
 
         // Get the data contents from the consistent source
         // This is more than likely the jQuery data helper
-        var dataValue = Utils.GetData($e[0], dataName);
+        var dataValue = Utils.get_data($e[0], dataName);
 
         // camelCase the attribute name to match the spec
         var camelDataName = dataName.replace(/-([a-z])/g, upperCaseLetter);
@@ -5326,7 +5326,7 @@ S2.define('select2/options',[
     }
 
     // Prefer our internal data cache if it exists
-    var data = $.extend(true, {}, Utils.GetData($e[0]), dataset);
+    var data = $.extend(true, {}, Utils.get_data($e[0]), dataset);
 
     data = Utils._convertData(data);
 
@@ -5363,8 +5363,8 @@ S2.define('select2/core',[
   './keys'
 ], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
-    if (Utils.GetData($element[0], 'select2') != null) {
-      Utils.GetData($element[0], 'select2').destroy();
+    if (Utils.get_data($element[0], 'select2') != null) {
+      Utils.get_data($element[0], 'select2').destroy();
     }
 
     this.$element = $element;
@@ -5981,7 +5981,7 @@ S2.define('select2/core',[
 
     this.$element.off('.select2');
     this.$element.attr('tabindex',
-    Utils.GetData(this.$element[0], 'old-tabindex'));
+    Utils.get_data(this.$element[0], 'old-tabindex'));
 
     this.$element.removeClass('select2-hidden-accessible');
     this.$element.attr('aria-hidden', 'false');
@@ -6342,7 +6342,7 @@ S2.define('select2/compat/inputData',[
 
   InputData.prototype.addOptions = function (_, $options) {
     var options = $.map($options, function ($option) {
-      return Utils.GetData($option[0], 'data');
+      return Utils.get_data($option[0], 'data');
     });
 
     this._currentData.push.apply(this._currentData, options);
@@ -6768,7 +6768,7 @@ S2.define('jquery.select2',[
         var args = Array.prototype.slice.call(arguments, 1);
 
         this.each(function () {
-          var instance = Utils.GetData(this, 'select2');
+          var instance = Utils.get_data(this, 'select2');
 
           if (instance == null && window.console && console.error) {
             console.error(

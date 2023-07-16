@@ -4402,7 +4402,7 @@ var dataUser = new Data();
 var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
 	rmultiDash = /[A-Z]/g;
 
-function getData( data ) {
+function get_data( data ) {
 	if ( data === "true" ) {
 		return true;
 	}
@@ -4438,7 +4438,7 @@ function dataAttr( elem, key, data ) {
 
 		if ( typeof data === "string" ) {
 			try {
-				data = getData( data );
+				data = get_data( data );
 			} catch ( e ) {}
 
 			// Make sure we set the data so it isn't changed later

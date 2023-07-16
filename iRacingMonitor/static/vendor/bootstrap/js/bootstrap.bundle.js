@@ -984,7 +984,7 @@
       element.removeAttribute(`data-bs-${normalizeDataKey(key)}`);
     },
 
-    getDataAttributes(element) {
+    get_dataAttributes(element) {
       if (!element) {
         return {};
       }
@@ -998,7 +998,7 @@
       return attributes;
     },
 
-    getDataAttribute(element, key) {
+    get_dataAttribute(element, key) {
       return normalizeData(element.getAttribute(`data-bs-${normalizeDataKey(key)}`));
     },
 
@@ -1493,7 +1493,7 @@
     static carouselInterface(element, config) {
       let data = Data.get(element, DATA_KEY$9);
       let _config = { ...Default$9,
-        ...Manipulator.getDataAttributes(element)
+        ...Manipulator.get_dataAttributes(element)
       };
 
       if (typeof config === 'object') {
@@ -1535,8 +1535,8 @@
         return;
       }
 
-      const config = { ...Manipulator.getDataAttributes(target),
-        ...Manipulator.getDataAttributes(this)
+      const config = { ...Manipulator.get_dataAttributes(target),
+        ...Manipulator.get_dataAttributes(this)
       };
       const slideIndex = this.getAttribute('data-bs-slide-to');
 
@@ -1861,7 +1861,7 @@
     static collapseInterface(element, config) {
       let data = Data.get(element, DATA_KEY$8);
       const _config = { ...Default$8,
-        ...Manipulator.getDataAttributes(element),
+        ...Manipulator.get_dataAttributes(element),
         ...(typeof config === 'object' && config ? config : {})
       };
 
@@ -1902,7 +1902,7 @@
       event.preventDefault();
     }
 
-    const triggerData = Manipulator.getDataAttributes(this);
+    const triggerData = Manipulator.get_dataAttributes(this);
     const selector = getSelectorFromElement(this);
     const selectorElements = SelectorEngine.find(selector);
     selectorElements.forEach(element => {
@@ -3923,7 +3923,7 @@
 
     _getConfig(config) {
       config = { ...this.constructor.Default,
-        ...Manipulator.getDataAttributes(this._element),
+        ...Manipulator.get_dataAttributes(this._element),
         ...config
       };
       typeCheckConfig(NAME$8, config, this.constructor.DefaultType);
@@ -4239,7 +4239,7 @@
 
   const _resetElementAttributes = (selector, styleProp) => {
     SelectorEngine.find(selector).forEach(element => {
-      const value = Manipulator.getDataAttribute(element, styleProp);
+      const value = Manipulator.get_dataAttribute(element, styleProp);
 
       if (typeof value === 'undefined') {
         element.style.removeProperty(styleProp);
@@ -4563,7 +4563,7 @@
 
     _getConfig(config) {
       config = { ...Default$5,
-        ...Manipulator.getDataAttributes(this._element),
+        ...Manipulator.get_dataAttributes(this._element),
         ...config
       };
       typeCheckConfig(NAME$6, config, DefaultType$5);
@@ -4968,7 +4968,7 @@
 
     _getConfig(config) {
       config = { ...Default$4,
-        ...Manipulator.getDataAttributes(this._element),
+        ...Manipulator.get_dataAttributes(this._element),
         ...(typeof config === 'object' ? config : {})
       };
       typeCheckConfig(NAME$5, config, DefaultType$4);
@@ -5767,7 +5767,7 @@
     }
 
     _getConfig(config) {
-      const dataAttributes = Manipulator.getDataAttributes(this._element);
+      const dataAttributes = Manipulator.get_dataAttributes(this._element);
       Object.keys(dataAttributes).forEach(dataAttr => {
         if (DISALLOWED_ATTRIBUTES.has(dataAttr)) {
           delete dataAttributes[dataAttr];
@@ -6128,7 +6128,7 @@
 
     _getConfig(config) {
       config = { ...Default$1,
-        ...Manipulator.getDataAttributes(this._element),
+        ...Manipulator.get_dataAttributes(this._element),
         ...(typeof config === 'object' && config ? config : {})
       };
 
@@ -6606,7 +6606,7 @@
 
     _getConfig(config) {
       config = { ...Default,
-        ...Manipulator.getDataAttributes(this._element),
+        ...Manipulator.get_dataAttributes(this._element),
         ...(typeof config === 'object' && config ? config : {})
       };
       typeCheckConfig(NAME, config, this.constructor.DefaultType);

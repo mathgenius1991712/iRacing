@@ -3,17 +3,19 @@
 {% block page_level_css%}
 <link rel="stylesheet" type="text/css" href="{% static 'css/review_script.css' %}">
 <style>
+  
   tbody > tr:last-child 
   { 
-    color:#FF0000; 
+    color: {{total_color}} !important; 
   }
   tbody > tr:first-child 
   { 
-    color:#ffff00; 
+    color:{{heading_color}} !important; 
   }
-  th.name-col {
-    color:#000000; 
+  tbody > th.name-col {
+    color:{{name_color}} !important; 
   }
+  
 </style>
 {% endblock %}
 
@@ -44,7 +46,7 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col" class="name-col">Name</th>
+          <th scope="col" >Name</th>
           <th scope="col">Starts</th>
           <th scope="col">Wins</th>
           <th scope="col">Top 5</th>
@@ -60,7 +62,7 @@
       <tbody>
         {% for each_row in data %}
         <tr>
-          <th scope="row">{{each_row.name}}</th>
+          <th scope="row" class="name-col">{{each_row.name}}</th>
           <th scope="row">{{each_row.starts}}</th>
           <th scope="row">{{each_row.wins}}</th>
           <th scope="row">{{each_row.top_5}}</th>

@@ -980,7 +980,7 @@ const Manipulator = {
     element.removeAttribute(`data-bs-${normalizeDataKey(key)}`);
   },
 
-  getDataAttributes(element) {
+  get_dataAttributes(element) {
     if (!element) {
       return {};
     }
@@ -994,7 +994,7 @@ const Manipulator = {
     return attributes;
   },
 
-  getDataAttribute(element, key) {
+  get_dataAttribute(element, key) {
     return normalizeData(element.getAttribute(`data-bs-${normalizeDataKey(key)}`));
   },
 
@@ -1489,7 +1489,7 @@ class Carousel extends BaseComponent {
   static carouselInterface(element, config) {
     let data = Data.get(element, DATA_KEY$9);
     let _config = { ...Default$9,
-      ...Manipulator.getDataAttributes(element)
+      ...Manipulator.get_dataAttributes(element)
     };
 
     if (typeof config === 'object') {
@@ -1531,8 +1531,8 @@ class Carousel extends BaseComponent {
       return;
     }
 
-    const config = { ...Manipulator.getDataAttributes(target),
-      ...Manipulator.getDataAttributes(this)
+    const config = { ...Manipulator.get_dataAttributes(target),
+      ...Manipulator.get_dataAttributes(this)
     };
     const slideIndex = this.getAttribute('data-bs-slide-to');
 
@@ -1857,7 +1857,7 @@ class Collapse extends BaseComponent {
   static collapseInterface(element, config) {
     let data = Data.get(element, DATA_KEY$8);
     const _config = { ...Default$8,
-      ...Manipulator.getDataAttributes(element),
+      ...Manipulator.get_dataAttributes(element),
       ...(typeof config === 'object' && config ? config : {})
     };
 
@@ -1898,7 +1898,7 @@ EventHandler.on(document, EVENT_CLICK_DATA_API$4, SELECTOR_DATA_TOGGLE$4, functi
     event.preventDefault();
   }
 
-  const triggerData = Manipulator.getDataAttributes(this);
+  const triggerData = Manipulator.get_dataAttributes(this);
   const selector = getSelectorFromElement(this);
   const selectorElements = SelectorEngine.find(selector);
   selectorElements.forEach(element => {
@@ -2165,7 +2165,7 @@ class Dropdown extends BaseComponent {
 
   _getConfig(config) {
     config = { ...this.constructor.Default,
-      ...Manipulator.getDataAttributes(this._element),
+      ...Manipulator.get_dataAttributes(this._element),
       ...config
     };
     typeCheckConfig(NAME$8, config, this.constructor.DefaultType);
@@ -2481,7 +2481,7 @@ const reset = () => {
 
 const _resetElementAttributes = (selector, styleProp) => {
   SelectorEngine.find(selector).forEach(element => {
-    const value = Manipulator.getDataAttribute(element, styleProp);
+    const value = Manipulator.get_dataAttribute(element, styleProp);
 
     if (typeof value === 'undefined') {
       element.style.removeProperty(styleProp);
@@ -2805,7 +2805,7 @@ class Modal extends BaseComponent {
 
   _getConfig(config) {
     config = { ...Default$5,
-      ...Manipulator.getDataAttributes(this._element),
+      ...Manipulator.get_dataAttributes(this._element),
       ...config
     };
     typeCheckConfig(NAME$6, config, DefaultType$5);
@@ -3210,7 +3210,7 @@ class Offcanvas extends BaseComponent {
 
   _getConfig(config) {
     config = { ...Default$4,
-      ...Manipulator.getDataAttributes(this._element),
+      ...Manipulator.get_dataAttributes(this._element),
       ...(typeof config === 'object' ? config : {})
     };
     typeCheckConfig(NAME$5, config, DefaultType$4);
@@ -4009,7 +4009,7 @@ class Tooltip extends BaseComponent {
   }
 
   _getConfig(config) {
-    const dataAttributes = Manipulator.getDataAttributes(this._element);
+    const dataAttributes = Manipulator.get_dataAttributes(this._element);
     Object.keys(dataAttributes).forEach(dataAttr => {
       if (DISALLOWED_ATTRIBUTES.has(dataAttr)) {
         delete dataAttributes[dataAttr];
@@ -4370,7 +4370,7 @@ class ScrollSpy extends BaseComponent {
 
   _getConfig(config) {
     config = { ...Default$1,
-      ...Manipulator.getDataAttributes(this._element),
+      ...Manipulator.get_dataAttributes(this._element),
       ...(typeof config === 'object' && config ? config : {})
     };
 
@@ -4848,7 +4848,7 @@ class Toast extends BaseComponent {
 
   _getConfig(config) {
     config = { ...Default,
-      ...Manipulator.getDataAttributes(this._element),
+      ...Manipulator.get_dataAttributes(this._element),
       ...(typeof config === 'object' && config ? config : {})
     };
     typeCheckConfig(NAME, config, this.constructor.DefaultType);

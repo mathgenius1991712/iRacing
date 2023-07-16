@@ -11,8 +11,11 @@ from django.conf import settings
 import pandas as pd
 import dataframe_image as dfi
 
+import cv2
 
-def getDataForOneMember(start_date, end_date, customer_id):
+IMAGE_WIDTH = 1920
+
+def get_dataForOneMember(start_date, end_date, customer_id):
   member = Member.objects.filter(customer_id = customer_id).first()
   cur_setting = MetaInfo.objects.first()
   username = cur_setting.iRacing_username
@@ -79,7 +82,7 @@ def getDataForOneMember(start_date, end_date, customer_id):
   
   
 
-def getData(start_date, end_date):
+def get_data(start_date, end_date):
   data = []
   total = {}
   total["name"] = "Total"
@@ -95,7 +98,7 @@ def getData(start_date, end_date):
   total["safety_gain_loss"] = 0
   members = Member.objects.all()
   for member in members:
-    member_data = getDataForOneMember(start_date=start_date, end_date=end_date, customer_id=member.customer_id)
+    member_data = get_dataForOneMember(start_date=start_date, end_date=end_date, customer_id=member.customer_id)
     data.append(member_data)
     total["starts"] += member_data["starts"]
     total["wins"] += member_data["starts"]
@@ -110,7 +113,7 @@ def getData(start_date, end_date):
   data.append(total)
   return data
   
-def saveData(data, start_date, end_date):
+def save_data(data, start_date, end_date):
   if os.path.exists('output.json'):
     os.remove("output.json")
   output_data = {
@@ -122,20 +125,30 @@ def saveData(data, start_date, end_date):
   with open("output.json", "w") as outfile:
     outfile.write(json_for_output)
 
-def readData():
+def read_data():
   f = open('output.json')
   data = json.load(f)
   return data
 
-def generateImage():
+def generate_image():
+  data_image_path = os.path.join(settings.MEDIA_ROOT, "output_data.jpg")
+  logo_image_path = os.path.join(settings.MEDIA_ROOT, "output_logo.jpg")
   filepath = os.path.join(settings.MEDIA_ROOT, "output.jpg")
+  filler_image_path = os.path.join(settings.MEDIA_ROOT, "filler.jpg")
   df = pd.DataFrame(columns=["name", "starts", "wins", "laps", "top_5", "top_10", "laps_lead", "cautions", "caution_laps", "i_rating_gain_loss", "safety_gain_loss"])
   if not os.path.exists('output.json'):
     return False
-  data = readData()
+  data = read_data()
   for each_row in data["data"]:
     df.loc[len(df)] = each_row
   
-  
-  dfi.export(df, filepath)
+  dfi.export(df, data_image_path)
+
+  data_image = cv2.imread(data_image_path)
+  data_image = cv2.resize(data_image, (IMAGE_WIDTH, (int)(data_image.shape[0] * IMAGE_WIDTH / data_image.shape[1])))
+  logo_image = cv2.imread(logo_image_path)
+  filler_image = cv2.imread(filler_image_path)
+  logo_image = cv2.resize(logo_image, (IMAGE_WIDTH, (int)(logo_image.shape[0] * IMAGE_WIDTH / logo_image.shape[1])))
+  output_image = cv2.vconcat([logo_image, data_image, filler_image])
+  cv2.imwrite(filepath, output_image)
   return True

@@ -134,7 +134,7 @@ def generateImage():
     return False
   data = readData()
   for each_row in data["data"]:
-    df = df.append(each_row)
+    df.loc[len(df)] = each_row
   
   
   dfi.export(df, filepath)

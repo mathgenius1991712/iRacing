@@ -97,16 +97,16 @@ def getData(start_date, end_date):
   for member in members:
     member_data = getDataForOneMember(start_date=start_date, end_date=end_date, customer_id=member.customer_id)
     data.append(member_data)
-    total["starts"] += total["starts"]
-    total["wins"] += total["starts"]
-    total["laps"] += total["laps"]
-    total["top_5"] += total["top_5"]
-    total["top_10"] += total["top_10"]
-    total["laps_lead"] += total["laps_lead"]
-    total["cautions"] += total["cautions"]
-    total["caution_laps"] += total["caution_laps"]
-    total["i_rating_gain_loss"] += total["i_rating_gain_loss"]
-    total["safety_gain_loss"] += total["safety_gain_loss"]
+    total["starts"] += member_data["starts"]
+    total["wins"] += member_data["starts"]
+    total["laps"] += member_data["laps"]
+    total["top_5"] += member_data["top_5"]
+    total["top_10"] += member_data["top_10"]
+    total["laps_lead"] += member_data["laps_lead"]
+    total["cautions"] += member_data["cautions"]
+    total["caution_laps"] += member_data["caution_laps"]
+    total["i_rating_gain_loss"] += member_data["i_rating_gain_loss"]
+    total["safety_gain_loss"] += member_data["safety_gain_loss"]
   data.append(total)
   return data
   

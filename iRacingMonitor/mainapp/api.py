@@ -28,7 +28,9 @@ def get_dataForOneMember(start_date, end_date, customer_id):
   series = ir2.result_search_series(
     start_range_begin = start_range_begin,
     finish_range_begin = start_range_begin,
-    cust_id=customer_id
+    cust_id=customer_id,
+    official_only=True,
+    event_types=[5]
   )
   series_in_range = []
   wins = 0
@@ -43,6 +45,7 @@ def get_dataForOneMember(start_date, end_date, customer_id):
     each_series_start_date = datetime.datetime.strptime(each_series['start_time'], "%Y-%m-%dT%H:%M:%SZ")
     if each_series_start_date > end_date:
       break
+    if each_series[]
     result_each_series = ir2.result(subsession_id=each_series["subsession_id"], include_licenses=True)
     session_results = result_each_series["session_results"][0]["results"]
     rank = 0

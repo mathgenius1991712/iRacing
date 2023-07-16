@@ -129,7 +129,7 @@ def readData():
 
 def generateImage():
   filepath = os.path.join(settings.MEDIA_ROOT, "output.jpg")
-  df = pd.DataFrame({})
+  df = pd.DataFrame(columns=["name", "starts", "wins", "laps", "top_5", "top_10", "laps_lead", "cautions", "caution_laps", "i_rating_gain_loss", "safety_gain_loss"])
   if not os.path.exists('output.json'):
     return False
   data = readData()

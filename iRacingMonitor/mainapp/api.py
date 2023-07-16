@@ -11,6 +11,7 @@ from django.conf import settings
 import pandas as pd
 import dataframe_image as dfi
 
+
 def getDataForOneMember(start_date, end_date, customer_id):
   member = Member.objects.filter(customer_id = customer_id).first()
   cur_setting = MetaInfo.objects.first()
@@ -110,7 +111,7 @@ def getData(start_date, end_date):
   return data
   
 def saveData(data, start_date, end_date):
-  if not os.path.exists('output.json'):
+  if os.path.exists('output.json'):
     os.remove("output.json")
   output_data = {
     "start_date": start_date.strftime('%Y-%m-%d'),
@@ -127,6 +128,7 @@ def readData():
   return data
 
 def generateImage():
+  filepath = os.path.join(settings.MEDIA_ROOT, "output.jpg")
   df = pd.DataFrame({})
   if not os.path.exists('output.json'):
     return False
@@ -134,6 +136,6 @@ def generateImage():
   for each_row in data["data"]:
     df = df.append(each_row)
   
-  filepath = os.path.join(settings.MEDIA_ROOT, "output.jpg")
+  
   dfi.export(df, filepath)
   return True

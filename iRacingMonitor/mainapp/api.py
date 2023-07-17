@@ -46,7 +46,11 @@ def get_dataForOneMember(start_date, end_date, customer_id):
     if each_series_start_date > end_date:
       break
     result_each_series = ir2.result(subsession_id=each_series["subsession_id"], include_licenses=True)
+    
     session_results = result_each_series["session_results"][0]["results"]
+    for simsession in result_each_series["session_results"]:
+      if simsession["simsession_name"] == "RACE":
+        session_results = simsession["results"]
     rank = 0
     for driver_rank in session_results:
       rank += 1
@@ -103,7 +107,7 @@ def get_data(start_date, end_date):
     member_data = get_dataForOneMember(start_date=start_date, end_date=end_date, customer_id=member.customer_id)
     data.append(member_data)
     total["starts"] += member_data["starts"]
-    total["wins"] += member_data["starts"]
+    total["wins"] += member_data["wins"]
     total["laps"] += member_data["laps"]
     total["top_5"] += member_data["top_5"]
     total["top_10"] += member_data["top_10"]

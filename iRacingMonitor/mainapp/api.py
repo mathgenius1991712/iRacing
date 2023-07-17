@@ -82,7 +82,7 @@ def get_dataForOneMember(start_date, end_date, customer_id):
   data["cautions"] = cautions
   data["caution_laps"] = caution_laps
   data["i_rating_gain_loss"] = i_rating_gain_loss
-  data["safety_gain_loss"] = 0
+  # data["safety_gain_loss"] = 0
 
   return data
   
@@ -101,7 +101,7 @@ def get_data(start_date, end_date):
   total["cautions"] = 0
   total["caution_laps"] = 0
   total["i_rating_gain_loss"] = 0
-  total["safety_gain_loss"] = 0
+  # total["safety_gain_loss"] = 0
   members = Member.objects.all()
   for member in members:
     member_data = get_dataForOneMember(start_date=start_date, end_date=end_date, customer_id=member.customer_id)
@@ -115,7 +115,7 @@ def get_data(start_date, end_date):
     total["cautions"] += member_data["cautions"]
     total["caution_laps"] += member_data["caution_laps"]
     total["i_rating_gain_loss"] += member_data["i_rating_gain_loss"]
-    total["safety_gain_loss"] += member_data["safety_gain_loss"]
+    # total["safety_gain_loss"] += member_data["safety_gain_loss"]
   data.append(total)
   return data
   
@@ -141,7 +141,7 @@ def generate_image():
   logo_image_path = os.path.join(settings.MEDIA_ROOT, "output_logo.jpg")
   filepath = os.path.join(settings.MEDIA_ROOT, "output.jpg")
   filler_image_path = os.path.join(settings.MEDIA_ROOT, "filler.jpg")
-  df = pd.DataFrame(columns=["name", "starts", "wins", "laps", "top_5", "top_10", "laps_lead", "cautions", "caution_laps", "i_rating_gain_loss", "safety_gain_loss"])
+  df = pd.DataFrame(columns=["name", "starts", "wins", "laps", "top_5", "top_10", "laps_lead", "cautions", "caution_laps", "i_rating_gain_loss"])
   if not os.path.exists('output.json'):
     return False
   data = read_data()
